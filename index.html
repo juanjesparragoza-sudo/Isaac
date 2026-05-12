@@ -504,6 +504,48 @@
       .scene { gap: 10px; }
       .countdown-box { min-width: 70px; padding: 14px 10px; }
     }
+
+    /* ===== MUSIC BUTTON ===== */
+    #music-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 999;
+      width: 56px;
+      height: 56px;
+      background: var(--dirt);
+      border: 4px solid #000;
+      box-shadow: 4px 4px 0 #000;
+      cursor: pointer;
+      font-size: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.1s, box-shadow 0.1s;
+      animation: btnPulse 2s infinite alternate;
+    }
+    #music-btn:hover  { transform: translate(2px,2px); box-shadow: 2px 2px 0 #000; }
+    #music-btn:active { transform: translate(4px,4px); box-shadow: none; }
+    #music-btn.playing { background: var(--grass); }
+    @keyframes btnPulse {
+      from { box-shadow: 4px 4px 0 #000, 0 0 0 rgba(240,192,64,0); }
+      to   { box-shadow: 4px 4px 0 #000, 0 0 16px rgba(240,192,64,0.6); }
+    }
+    #music-label {
+      position: fixed;
+      bottom: 86px;
+      right: 16px;
+      z-index: 999;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 6px;
+      color: var(--gold);
+      text-shadow: 1px 1px 0 #000;
+      text-align: center;
+      background: rgba(0,0,0,0.7);
+      padding: 4px 8px;
+      border: 2px solid var(--gold);
+      pointer-events: none;
+    }
   </style>
 </head>
 <body>
@@ -511,6 +553,15 @@
 <!-- GIF Background -->
 <div id="gif-bg"></div>
 <div id="gif-overlay"></div>
+
+<!-- Background Music -->
+<audio id="bg-music" loop preload="none">
+  <source src="https://archive.org/download/minecraft-volume-alpha/Minecraft%20-%20Volume%20Alpha%20-%2007%20Sweden.mp3" type="audio/mpeg"/>
+</audio>
+
+<!-- Music Toggle Button -->
+<div id="music-label">MÚSICA</div>
+<button id="music-btn" title="Activar/desactivar música" aria-label="Toggle música Minecraft">🎵</button>
 
 <!-- Stars background -->
 <div class="stars" id="stars"></div>
@@ -646,6 +697,35 @@
 </footer>
 
 <script>
+  // ---- MUSIC ----
+  (function() {
+    const audio = document.getElementById('bg-music');
+    const btn   = document.getElementById('music-btn');
+    const label = document.getElementById('music-label');
+    let playing = false;
+
+    audio.volume = 0.35;
+
+    btn.addEventListener('click', function() {
+      if (!playing) {
+        audio.play().then(() => {
+          playing = true;
+          btn.textContent = '🔇';
+          btn.classList.add('playing');
+          label.textContent = 'SILENCIAR';
+        }).catch(() => {
+          label.textContent = 'ERROR';
+        });
+      } else {
+        audio.pause();
+        playing = false;
+        btn.textContent = '🎵';
+        btn.classList.remove('playing');
+        label.textContent = 'MÚSICA';
+      }
+    });
+  })();
+
   // ---- STARS ----
   (function() {
     const c = document.getElementById('stars');
