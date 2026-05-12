@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🎮 ¡Isaac cumple 9! - Fiesta Minecraft</title>
+  <meta property="og:title" content="🎮 Isaac cumple 9 años - ¡Fiesta Minecraft!"/>
+  <meta property="og:description" content="¡Estás invitado a la fiesta de cumpleaños de Isaac! Temática Minecraft. 30 de Mayo 2026."/>
+  <meta property="og:image" content="Isaac.jpg"/>
+  <meta property="og:type" content="website"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="Isaac.jpg"/>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --grass: #5C9E31;
+      --dirt: #8B5E3C;
+      --stone: #7F7F7F;
+      --wood: #9C7A3C;
+      --diamond: #5DE8E0;
+      --gold: #F0C040;
+      --tnt-red: #CC2222;
+      --sky: #87CEEB;
+      --night: #0D1B2A;
+      --creeper: #4CAF50;
+      --lava: #FF6600;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Press Start 2P', monospace;
+      background-color: var(--night);
+      color: #fff;
+      overflow-x: hidden;
+      image-rendering: pixelated;
+    }
+
+    /* STARS */
+    .stars {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .star {
+      position: absolute;
+      width: 4px; height: 4px;
+      background: #fff;
+      animation: twinkle 2s infinite alternate;
+    }
+    @keyframes twinkle { from { opacity: 0.2; } to { opacity: 1; } }
+
+    /* FLOATING BLOCKS */
+    .floating-blocks {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .block {
+      position: absolute;
+      width: 24px; height: 24px;
+      border: 2px solid rgba(0,0,0,0.3);
+      animation: floatBlock linear infinite;
+      opacity: 0.15;
+    }
+    .block.grass { background: var(--grass); }
+    .block.dirt  { background: var(--dirt);  }
+    .block.stone { background: var(--stone); }
+    .block.gold  { background: var(--gold);  }
+    .block.diamond { background: var(--diamond); }
+    @keyframes floatBlock {
+      0%   { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+      10%  { opacity: 0.15; }
+      90%  { opacity: 0.15; }
+      100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+    }
+
+    main { position: relative; z-index: 1; }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      text-align: center;
+      background: linear-gradient(180deg, #1A3A5C 0%, #0D1B2A 60%, #2d1a0a 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Grass floor */
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 40px;
+      background: repeating-linear-gradient(90deg, var(--grass) 0 32px, #4a8a26 32px 64px);
+      box-shadow: 0 4px 0 var(--dirt) inset;
+    }
+
+    .hero-title {
+      font-size: clamp(18px, 4vw, 36px);
+      color: var(--gold);
+      text-shadow: 4px 4px 0 #7a5c00, -2px -2px 0 #000;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+      animation: pulse 1.5s infinite alternate;
+    }
+    @keyframes pulse {
+      from { text-shadow: 4px 4px 0 #7a5c00, 0 0 20px #F0C040; }
+      to   { text-shadow: 4px 4px 0 #7a5c00, 0 0 40px #F0C040, 0 0 60px #ffdd44; }
+    }
+
+    .hero-subtitle {
+      font-size: clamp(10px, 2vw, 16px);
+      color: var(--diamond);
+      margin-bottom: 30px;
+      text-shadow: 2px 2px 0 #004444;
+    }
+
+    /* PIXEL ART SCENE */
+    .scene {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 20px;
+      margin: 20px 0 40px;
+      flex-wrap: wrap;
+    }
+
+    /* NUMBER 9 */
+    .number-nine {
+      font-size: clamp(80px, 18vw, 160px);
+      color: var(--gold);
+      text-shadow: 6px 6px 0 #7a5c00, -4px -4px 0 #000, 0 0 30px #ffdd44;
+      line-height: 1;
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-12px); }
+    }
+
+    /* CAKE CSS */
+    .cake {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+    .candles {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 2px;
+    }
+    .candle {
+      width: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .flame {
+      width: 8px; height: 12px;
+      background: var(--lava);
+      border-radius: 50% 50% 30% 30%;
+      box-shadow: 0 0 6px #FF6600, 0 0 12px #ffaa00;
+      animation: flicker 0.5s infinite alternate;
+    }
+    @keyframes flicker {
+      from { transform: scaleX(1); }
+      to   { transform: scaleX(0.8) scaleY(1.1); }
+    }
+    .candle-body {
+      width: 8px; height: 20px;
+      background: var(--tnt-red);
+      border: 1px solid #000;
+    }
+    .cake-layer {
+      border: 2px solid #000;
+      image-rendering: pixelated;
+    }
+    .cake-top {
+      width: 100px; height: 20px;
+      background: repeating-linear-gradient(90deg, var(--grass) 0 20px, #4a8a26 20px 40px);
+    }
+    .cake-mid {
+      width: 110px; height: 30px;
+      background: repeating-linear-gradient(90deg, #7B3F00 0 20px, #5C2E00 20px 40px);
+    }
+    .cake-bot {
+      width: 120px; height: 30px;
+      background: repeating-linear-gradient(90deg, var(--stone) 0 20px, #666 20px 40px);
+    }
+
+    /* CSS PIXEL CHARACTERS */
+    .pixel-char {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: charBob 1s infinite alternate;
+    }
+    .pixel-char.alex { animation-delay: 0.5s; }
+    @keyframes charBob {
+      from { transform: translateY(0); }
+      to   { transform: translateY(-6px); }
+    }
+
+    /* Steve */
+    .steve-head {
+      width: 32px; height: 32px;
+      background: #C8A87A;
+      border: 2px solid #000;
+      position: relative;
+    }
+    .steve-head::before {
+      content: '';
+      position: absolute;
+      top: 8px; left: 4px;
+      width: 6px; height: 6px;
+      background: #333;
+      box-shadow: 12px 0 0 #333;
+    }
+    .steve-head::after {
+      content: '';
+      position: absolute;
+      bottom: 6px; left: 8px;
+      width: 16px; height: 4px;
+      background: #8B5E3C;
+    }
+    .steve-body {
+      width: 36px; height: 28px;
+      background: #5B7DB1;
+      border: 2px solid #000;
+      border-top: none;
+    }
+    .steve-legs {
+      display: flex;
+      gap: 2px;
+    }
+    .steve-leg {
+      width: 14px; height: 24px;
+      background: #3A5F9A;
+      border: 2px solid #000;
+    }
+
+    /* Pickaxe */
+    .pickaxe {
+      font-size: 24px;
+      transform: rotate(-45deg);
+      display: inline-block;
+      animation: swing 0.5s infinite alternate;
+    }
+    @keyframes swing {
+      from { transform: rotate(-30deg); }
+      to   { transform: rotate(-70deg); }
+    }
+
+    /* Creeper */
+    .creeper-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: creep 3s infinite;
+    }
+    @keyframes creep {
+      0%, 90%, 100% { transform: translateX(0); }
+      95% { transform: translateX(-4px); }
+    }
+    .creeper-head {
+      width: 28px; height: 28px;
+      background: var(--creeper);
+      border: 2px solid #000;
+      position: relative;
+    }
+    .creeper-head::before {
+      content: '';
+      position: absolute;
+      top: 8px; left: 4px;
+      width: 6px; height: 6px;
+      background: #1a3d1a;
+      box-shadow: 10px 0 0 #1a3d1a;
+    }
+    .creeper-head::after {
+      content: '';
+      position: absolute;
+      bottom: 4px; left: 6px;
+      width: 6px; height: 8px;
+      background: #1a3d1a;
+      box-shadow: 8px 2px 0 #1a3d1a;
+    }
+    .creeper-body {
+      width: 24px; height: 24px;
+      background: var(--creeper);
+      border: 2px solid #000;
+      border-top: none;
+    }
+    .creeper-legs {
+      display: flex; gap: 2px;
+    }
+    .creeper-leg {
+      width: 10px; height: 18px;
+      background: #3d8b3d;
+      border: 2px solid #000;
+    }
+
+    /* ===== COUNTDOWN ===== */
+    .countdown-section {
+      padding: 60px 20px;
+      background: linear-gradient(180deg, #0D1B2A, #1a2d1a);
+      text-align: center;
+    }
+    .section-title {
+      font-size: clamp(12px, 2.5vw, 20px);
+      color: var(--gold);
+      text-shadow: 3px 3px 0 #7a5c00;
+      margin-bottom: 40px;
+    }
+    .countdown-grid {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .countdown-box {
+      background: var(--dirt);
+      border: 4px solid #000;
+      box-shadow: 4px 4px 0 #000, inset -2px -2px 0 rgba(0,0,0,0.4);
+      padding: 20px 16px;
+      min-width: 90px;
+      position: relative;
+    }
+    .countdown-box::before {
+      content: '';
+      position: absolute;
+      top: 2px; left: 2px;
+      right: 2px; height: 4px;
+      background: rgba(255,255,255,0.15);
+    }
+    .countdown-num {
+      font-size: clamp(28px, 6vw, 48px);
+      color: var(--gold);
+      text-shadow: 3px 3px 0 #7a5c00;
+      display: block;
+    }
+    .countdown-label {
+      font-size: 7px;
+      color: #ccc;
+      margin-top: 8px;
+      display: block;
+    }
+
+    /* ===== MAP ===== */
+    .map-section {
+      padding: 60px 20px;
+      background: #1a1a2e;
+      text-align: center;
+    }
+    .map-container {
+      max-width: 700px;
+      margin: 0 auto;
+      border: 6px solid var(--grass);
+      box-shadow: 0 0 0 4px #000, 0 0 30px rgba(92, 158, 49, 0.4);
+    }
+    .map-container iframe {
+      width: 100%;
+      height: 350px;
+      border: none;
+      display: block;
+    }
+    .address-box {
+      background: var(--dirt);
+      border: 4px solid #000;
+      padding: 16px;
+      margin: 20px auto;
+      max-width: 500px;
+      font-size: 9px;
+      color: #fff;
+      text-shadow: 1px 1px 0 #000;
+      line-height: 2;
+    }
+    .address-box span { color: var(--gold); }
+
+    /* ===== RSVP ===== */
+    .rsvp-section {
+      padding: 60px 20px;
+      background: linear-gradient(180deg, #1a1a2e, #0D1B2A);
+      text-align: center;
+    }
+    .rsvp-form {
+      max-width: 500px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .field-label {
+      font-size: 8px;
+      color: var(--diamond);
+      text-align: left;
+      margin-bottom: 6px;
+      display: block;
+    }
+    .mc-input {
+      width: 100%;
+      background: #0a0a0a;
+      border: 4px solid var(--stone);
+      color: #fff;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 10px;
+      padding: 14px 12px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .mc-input:focus { border-color: var(--diamond); }
+    .mc-select {
+      width: 100%;
+      background: #0a0a0a;
+      border: 4px solid var(--stone);
+      color: #fff;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 10px;
+      padding: 14px 12px;
+      outline: none;
+      cursor: pointer;
+    }
+    .mc-select:focus { border-color: var(--diamond); }
+    .mc-btn {
+      background: var(--grass);
+      border: 4px solid #000;
+      box-shadow: 4px 4px 0 #000;
+      color: #fff;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 11px;
+      padding: 18px;
+      cursor: pointer;
+      text-shadow: 2px 2px 0 #000;
+      transition: transform 0.1s, box-shadow 0.1s;
+      letter-spacing: 1px;
+    }
+    .mc-btn:hover  { transform: translate(2px, 2px); box-shadow: 2px 2px 0 #000; }
+    .mc-btn:active { transform: translate(4px, 4px); box-shadow: 0 0 0 #000; }
+    .mc-btn:disabled { background: var(--stone); cursor: not-allowed; }
+
+    .msg-box {
+      display: none;
+      padding: 16px;
+      border: 4px solid #000;
+      font-size: 9px;
+      line-height: 2;
+    }
+    .msg-box.success { background: #1a4d1a; border-color: var(--grass); color: #afffaf; }
+    .msg-box.error   { background: #4d1a1a; border-color: var(--tnt-red); color: #ffafaf; }
+    .msg-box.show    { display: block; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #050d15;
+      padding: 30px 20px;
+      text-align: center;
+      font-size: 7px;
+      color: #555;
+      border-top: 4px solid var(--grass);
+    }
+    footer span { color: var(--gold); }
+
+    /* RESPONSIVE */
+    @media (max-width: 480px) {
+      .scene { gap: 10px; }
+      .countdown-box { min-width: 70px; padding: 14px 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Stars background -->
+<div class="stars" id="stars"></div>
+<div class="floating-blocks" id="blocks"></div>
+
+<main>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <p class="hero-subtitle">⚔️ Una aventura épica te espera ⚔️</p>
+    <h1 class="hero-title">¡FELIZ CUMPLEAÑOS ISAAC!</h1>
+
+    <!-- Scene: number, cake, characters -->
+    <div class="scene">
+
+      <!-- Steve with pickaxe -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:2px;margin-bottom:10px;">
+        <span class="pickaxe">⛏️</span>
+        <div class="pixel-char steve">
+          <div class="steve-head"></div>
+          <div class="steve-body"></div>
+          <div class="steve-legs"><div class="steve-leg"></div><div class="steve-leg"></div></div>
+        </div>
+      </div>
+
+      <!-- Number 9 -->
+      <div class="number-nine">9</div>
+
+      <!-- Cake -->
+      <div class="cake">
+        <div class="candles">
+          <div class="candle"><div class="flame"></div><div class="candle-body"></div></div>
+          <div class="candle"><div class="flame"></div><div class="candle-body"></div></div>
+          <div class="candle"><div class="flame"></div><div class="candle-body"></div></div>
+          <div class="candle"><div class="flame"></div><div class="candle-body"></div></div>
+          <div class="candle"><div class="flame"></div><div class="candle-body"></div></div>
+        </div>
+        <div class="cake-layer cake-top"></div>
+        <div class="cake-layer cake-mid"></div>
+        <div class="cake-layer cake-bot"></div>
+      </div>
+
+      <!-- Creeper -->
+      <div class="creeper-wrap">
+        <div class="creeper-head"></div>
+        <div class="creeper-body"></div>
+        <div class="creeper-legs"><div class="creeper-leg"></div><div class="creeper-leg"></div></div>
+      </div>
+
+    </div>
+
+    <p class="hero-subtitle">🎮 ¡Cumple <strong style="color:var(--gold)">9 AÑOS</strong>! 🎮</p>
+    <p style="font-size:9px;color:#aaa;margin-top:10px;">Sábado 30 de Mayo, 2026</p>
+  </section>
+
+  <!-- ===== COUNTDOWN ===== -->
+  <section class="countdown-section">
+    <h2 class="section-title">⏰ TIEMPO RESTANTE ⏰</h2>
+    <div class="countdown-grid">
+      <div class="countdown-box">
+        <span class="countdown-num" id="cd-days">00</span>
+        <span class="countdown-label">DÍAS</span>
+      </div>
+      <div class="countdown-box">
+        <span class="countdown-num" id="cd-hours">00</span>
+        <span class="countdown-label">HORAS</span>
+      </div>
+      <div class="countdown-box">
+        <span class="countdown-num" id="cd-mins">00</span>
+        <span class="countdown-label">MINUTOS</span>
+      </div>
+      <div class="countdown-box">
+        <span class="countdown-num" id="cd-secs">00</span>
+        <span class="countdown-label">SEGUNDOS</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MAP ===== -->
+  <section class="map-section">
+    <h2 class="section-title">📍 ¿DÓNDE ES LA FIESTA?</h2>
+    <div class="address-box">
+      🏠 <span>Luis María Campos 4354</span><br/>
+      Caseros, Buenos Aires<br/>
+      🗓️ <span>Sábado 30 de Mayo, 2026</span>
+    </div>
+    <div class="map-container">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3284.9!2d-58.561!3d-34.607!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zLTM0LjYwNyw1OC41NjE!5e0!3m2!1ses!2sar!4v1620000000000!5m2!1ses!2sar&q=Luis+Mar%C3%ADa+Campos+4354,+Caseros,+Buenos+Aires"
+        allowfullscreen=""
+        loading="lazy"
+        title="Ubicación fiesta Isaac">
+      </iframe>
+    </div>
+    <a href="https://www.google.com/maps/search/Luis+Mar%C3%ADa+Campos+4354,+Caseros,+Buenos+Aires"
+       target="_blank" rel="noopener"
+       style="display:inline-block;margin-top:20px;background:var(--diamond);color:#000;font-family:'Press Start 2P',monospace;font-size:8px;padding:12px 20px;border:4px solid #000;box-shadow:4px 4px 0 #000;text-decoration:none;">
+      🗺️ ABRIR EN GOOGLE MAPS
+    </a>
+  </section>
+
+  <!-- ===== RSVP ===== -->
+  <section class="rsvp-section">
+    <h2 class="section-title">✅ CONFIRMAR ASISTENCIA</h2>
+    <form class="rsvp-form" id="rsvpForm">
+      <div>
+        <label class="field-label" for="nombre">👤 NOMBRE DEL INVITADO</label>
+        <input class="mc-input" type="text" id="nombre" name="nombre" placeholder="Tu nombre..." required autocomplete="name"/>
+      </div>
+      <div>
+        <label class="field-label" for="personas">👨‍👩‍👧‍👦 CANTIDAD DE PERSONAS</label>
+        <select class="mc-select" id="personas" name="personas" required>
+          <option value="">-- Seleccionar --</option>
+          <option value="1">1 persona</option>
+          <option value="2">2 personas</option>
+          <option value="3">3 personas</option>
+          <option value="4">4 personas</option>
+          <option value="5">5 personas</option>
+          <option value="6">6+ personas</option>
+        </select>
+      </div>
+      <div id="msgBox" class="msg-box" role="alert"></div>
+      <button class="mc-btn" type="submit" id="submitBtn">
+        ⚔️ ¡CONFIRMAR! ⚔️
+      </button>
+    </form>
+  </section>
+
+</main>
+
+<footer>
+  <p>Creado con ❤️ para <span>Isaac</span> 🎮 · Fiesta Minecraft · 30/05/2026</p>
+</footer>
+
+<script>
+  // ---- STARS ----
+  (function() {
+    const c = document.getElementById('stars');
+    for (let i = 0; i < 80; i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      s.style.left = Math.random() * 100 + '%';
+      s.style.top  = Math.random() * 100 + '%';
+      s.style.animationDelay = Math.random() * 3 + 's';
+      s.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+      c.appendChild(s);
+    }
+  })();
+
+  // ---- FLOATING BLOCKS ----
+  (function() {
+    const container = document.getElementById('blocks');
+    const types = ['grass','dirt','stone','gold','diamond'];
+    for (let i = 0; i < 20; i++) {
+      const b = document.createElement('div');
+      b.className = 'block ' + types[Math.floor(Math.random() * types.length)];
+      b.style.left = Math.random() * 100 + '%';
+      b.style.animationDuration = (8 + Math.random() * 12) + 's';
+      b.style.animationDelay = (Math.random() * 15) + 's';
+      container.appendChild(b);
+    }
+  })();
+
+  // ---- COUNTDOWN ----
+  function updateCountdown() {
+    const target = new Date('2026-05-30T16:00:00-03:00');
+    const now    = new Date();
+    const diff   = target - now;
+    if (diff <= 0) {
+      ['cd-days','cd-hours','cd-mins','cd-secs'].forEach(id => document.getElementById(id).textContent = '00');
+      return;
+    }
+    const days  = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    const mins  = Math.floor((diff % 3600000)  / 60000);
+    const secs  = Math.floor((diff % 60000)    / 1000);
+    document.getElementById('cd-days').textContent  = String(days).padStart(2,'0');
+    document.getElementById('cd-hours').textContent = String(hours).padStart(2,'0');
+    document.getElementById('cd-mins').textContent  = String(mins).padStart(2,'0');
+    document.getElementById('cd-secs').textContent  = String(secs).padStart(2,'0');
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // ---- RSVP ----
+  document.getElementById('rsvpForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    const box = document.getElementById('msgBox');
+    const nombre   = document.getElementById('nombre').value.trim();
+    const personas = document.getElementById('personas').value;
+
+    if (!nombre || !personas) return;
+
+    btn.disabled = true;
+    btn.textContent = '⏳ Enviando...';
+    box.className = 'msg-box';
+    box.textContent = '';
+
+    try {
+      const res = await fetch('https://sheetdb.io/api/v1/wjdodiixmqxis', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ data: { nombre, personas, fecha: new Date().toLocaleString('es-AR') } })
+      });
+      if (res.ok) {
+        box.className = 'msg-box success show';
+        box.innerHTML = '🎉 ¡Confirmado! Nos vemos en la fiesta, <strong>' + nombre + '</strong>!';
+        this.reset();
+      } else {
+        throw new Error('Error ' + res.status);
+      }
+    } catch(err) {
+      box.className = 'msg-box error show';
+      box.textContent = '❌ Algo salió mal. Intentá de nuevo.';
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '⚔️ ¡CONFIRMAR! ⚔️';
+    }
+  });
+</script>
+</body>
+</html>
