@@ -58,19 +58,45 @@
     }
 
     /* ===== GIF FLOTANTE DELANTE DE TODO ===== */
+    /* ===== GIF ANIMADO CRUZANDO LA PANTALLA ===== */
     .gif-flotante {
       position: fixed;
-      bottom: 20px;
-      left: 20px;
-      width: 100px; /* Puedes ajustar el tamaño aquí */
-      z-index: 10000; /* Asegura que esté por encima de todo */
-      pointer-events: none; /* Permite tocar botones que estén "debajo" del GIF */
-      animation: flotarGif 3s ease-in-out infinite;
+      bottom: 50px;       /* Altura a la que va a pasar volando */
+      width: 250px;       /* Tamaño más grande para Charizard */
+      z-index: 10000;
+      pointer-events: none;
+      /* Animación: se mueve, flota y cambia de dirección */
+      animation: 
+        cruzarPantalla 15s linear infinite, 
+        flotarGif 3s ease-in-out infinite;
     }
 
+    /* Animación para que cruce de lado a lado */
+    @keyframes cruzarPantalla {
+      0% { 
+        left: -300px; 
+        transform: scaleX(1); /* Mira hacia la derecha */
+      }
+      49% { 
+        transform: scaleX(1); 
+      }
+      50% { 
+        left: calc(100% + 300px); 
+        transform: scaleX(-1); /* Gira para mirar hacia la izquierda */
+      }
+      99% { 
+        transform: scaleX(-1); 
+      }
+      100% { 
+        left: -300px; 
+        transform: scaleX(1); 
+      }
+    }
+
+    /* Mantiene el efecto de sutil subida y bajada */
     @keyframes flotarGif {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-20px); }
+      0%, 100% { margin-bottom: 0; }
+      50% { margin-bottom: 20px; }
     }
 
     /* FLOATING POKEBALLS */
