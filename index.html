@@ -367,10 +367,10 @@
       bottom: 24px;
       right: 24px;
       z-index: 999;
-      width: 56px;
-      height: 56px;
+      width: 80px;
+      height: 80px;
       background: var(--pk-white);
-      border: 4px solid var(--pk-black);
+      border: 5px solid var(--pk-black);
       border-radius: 50%;
       cursor: pointer;
       font-size: 22px;
@@ -378,13 +378,13 @@
       align-items: center;
       justify-content: center;
       transition: transform 0.1s;
-      box-shadow: 2px 2px 0 var(--pk-black);
+      box-shadow: 4px 4px 0 var(--pk-black);
     }
     #music-btn::after {
         content: '';
         position: absolute;
         top: 50%; left: 0; right: 0;
-        height: 4px;
+        height: 5px;
         background: var(--pk-black);
         transform: translateY(-50%);
     }
@@ -399,9 +399,9 @@
         position: relative;
         z-index: 2;
         background: var(--pk-white);
-        border: 4px solid var(--pk-black);
+        border: 5px solid var(--pk-black);
         border-radius: 50%;
-        width: 16px; height: 16px;
+        width: 24px; height: 24px;
     }
     #music-btn:hover  { transform: translate(2px,2px); }
     #music-btn.playing { animation: shake 0.5s infinite; }
@@ -607,7 +607,7 @@
     for (let i = 0; i < 15; i++) {
       const b = document.createElement('div');
       b.className = 'pokeball-float';
-      b.style.left = Math.random() * 100 + '%';
+      b.style.left = Math.random() * 150 + '%';
       b.style.animationDuration = (8 + Math.random() * 12) + 's';
       b.style.animationDelay = (Math.random() * 15) + 's';
       container.appendChild(b);
